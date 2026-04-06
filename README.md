@@ -1,10 +1,7 @@
 # Router Automation Extension (Huawei B311‑221)
 
 Un’estensione open‑source per Chrome progettata per automatizzare operazioni ripetitive sul router **Huawei B311‑221**, come:
-
-- riavvio rapido del router  
-- riconnessione forzata alla rete  
-- accesso diretto alle pagine interne  
+ 
 - gestione semplificata del login  
 - strumenti rapidi per la diagnostica  
 
@@ -13,21 +10,19 @@ L’obiettivo è rendere la gestione del router più veloce, comoda e accessibil
 ---
 
 ## 🚀 Funzionalità attuali
-- Accesso diretto al pannello del router tramite icona dell’estensione  
-- Pulsante “Reconnect” rapido  
-- Pulsante “Restart Router”  
-- Navigazione diretta alle sezioni interne del router  
-- Gestione errori e timeout  
+- Login rapido al pannello del router
+- Attivazione/disattivazione Wi‑Fi con un clic
+- Attivazione/disattivazione connessione dati 4G
+- Statistiche mensili: GB usati, GB rimanenti, download e upload
+- Elenco dei dispositivi attualmente connessi
+- Visualizzazione qualità segnale 4G
 - Interfaccia multilingua (IT / EN / ES)
 
 ---
 
 ## 🧪 Funzionalità in sviluppo
-- Automazioni programmabili (es. riavvio periodico)  
 - Supporto per altri router Huawei compatibili  
 - Modalità avanzata con funzioni aggiuntive  
-- Log attività  
-- Modalità “Safe reconnect”  
 - Miglioramenti all’interfaccia e all’accessibilità  
 
 ---
@@ -44,8 +39,9 @@ L’obiettivo è rendere la gestione del router più veloce, comoda e accessibil
 ## 🛠 Compatibilità
 - Router Huawei **B311‑221**  
 - ChromeOS, Windows, Linux, macOS  
-- Chrome / Edge / Brave  
-
+L’estensione è sviluppata per Google Chrome.
+In teoria è compatibile anche con altri browser basati su Chromium (Edge, Brave, Opera, Vivaldi),
+ma al momento non è stata testata su queste piattaforme.
 ---
 
 ## 🧩 Contribuire
