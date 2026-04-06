@@ -1,4 +1,4 @@
-# Chrome Router Automation
+# Huawei B311 Router Tools
 
 Estensione per Google Chrome che semplifica la gestione del router Huawei B311-221.
 
