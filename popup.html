@@ -185,11 +185,11 @@
 
   <div id="signal-home" class="signal-card" style="display:none">
     <div class="signal-header">
-      <span>📡 Segnale 4G</span>
+      <span data-i18n="signal4g">📡 Segnale 4G</span>
       <button id="refresh-signal-btn" class="refresh-signal" data-i18n="refreshSignal">🔄 Aggiorna</button>
     </div>
     <div>
-      <div style="font-size: 10px; color: var(--text2); margin-bottom: 2px;">Potenza segnale (RSRP)</div>
+      <div style="font-size: 10px; color: var(--text2); margin-bottom: 2px;" data-i18n="signalPower">Potenza segnale (RSRP)</div>
       <div class="progress-track">
         <div class="progress-fill" id="signal-bar-fill" style="width:0%;"></div>
       </div>
@@ -199,7 +199,7 @@
       </div>
     </div>
     <div id="rsrq-container" style="margin-top: 10px;">
-      <div style="font-size: 10px; color: var(--text2); margin-bottom: 2px;">Qualità segnale (RSRQ)</div>
+      <div style="font-size: 10px; color: var(--text2); margin-bottom: 2px;" data-i18n="signalQuality">Qualità segnale (RSRQ)</div>
       <div class="progress-track">
         <div class="progress-fill" id="signal-rsrq-bar" style="width:0%;"></div>
       </div>
@@ -208,7 +208,7 @@
         <span id="signal-rsrq-desc">---</span>
       </div>
     </div>
-    <button id="toggle-signal-details" class="signal-btn" style="margin-top: 8px;">📋 Mostra dettagli</button>
+    <button id="toggle-signal-details" class="signal-btn" style="margin-top: 8px;" data-i18n="showDetails">📋 Mostra dettagli</button>
     <div id="signal-details-panel" style="display: none; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);">
       <div class="stats-grid">
         <div class="stat-box"><div class="stat-val" id="signal-rsrp-detail">--</div><div class="stat-lbl">RSRP</div></div>
