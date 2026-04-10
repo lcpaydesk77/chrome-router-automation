@@ -45,7 +45,7 @@
 
 ## ⚠️ Avvertenza
 
-Questa estensione **non è ufficiale Huawei**. È stata sviluppata tramite reverse engineering delle API del router B311-221. Funziona perfettamente con il mio dispositivo, ma usala a tua discrezione.
+Questa estensione utilizza API non documentate ma pubblicamente accessibili del router Huawei B311-221
 
 ## 🧪 Testata su
 
