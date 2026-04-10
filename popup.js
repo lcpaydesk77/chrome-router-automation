@@ -1,5 +1,16 @@
 let ROUTER = 'http://192.168.1.1';
 
+async function requestRouterPermission(ip) {
+  const url = `http://${ip}/*`;
+  return new Promise((resolve) => {
+    chrome.permissions.request({
+      origins: [url]
+    }, (granted) => {
+      resolve(granted);
+    });
+  });
+}
+
 function xmlVal(doc, tag) {
   const el = doc.querySelector(tag);
   return el ? el.textContent : null;
@@ -341,6 +352,31 @@ function logout() {
 }
 
 async function init() {
+  const gateway = document.getElementById('gateway-input').value;
+  const ip = gateway.replace(/^https?:\/\//, '');
+  
+  const hasPermission = await new Promise((resolve) => {
+    chrome.permissions.contains({
+      origins: [`http://${ip}/*`]
+    }, (result) => {
+      resolve(result);
+    });
+  });
+  
+  if (!hasPermission) {
+    const granted = await new Promise((resolve) => {
+      chrome.permissions.request({
+        origins: [`http://${ip}/*`]
+      }, (granted) => {
+        resolve(granted);
+      });
+    });
+    if (!granted) {
+      setStatus('Permesso negato per ' + ip, 'error');
+      return;
+    }
+  }
+  
   const pwd = document.getElementById('pwd').value.trim();
   if (!pwd) return;
   if (document.getElementById('save-pwd').checked) chrome.storage.local.set({pwd});
@@ -482,7 +518,7 @@ document.getElementById('btn-save-settings').addEventListener('click', async () 
 
 document.getElementById('donate-btn').addEventListener('click', e => {
   e.preventDefault();
-  chrome.tabs.create({url: 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lc.paydesk77@gmail.com&currency_code=EUR'});
+  window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lc.paydesk77@gmail.com&currency_code=EUR', '_blank');
 });
 
 chrome.storage.local.get(['pwd','savePwd','gateway','lang'], ({pwd, savePwd, gateway, lang}) => {
