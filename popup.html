@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --surface2: #f1f3f4;
+      --border: #dadce0;
+      --text: #202124;
+      --text2: #5f6368;
+      --accent: #1a73e8;
+      --green: #0d652d;
+      --red: #c5221f;
+      --amber: #e37400;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 340px; min-height: 480px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 13px; display: flex; flex-direction: column; }
+
+    .page { display: none; padding: 12px; flex: 1; }
+    .page.active { display: block; }
+
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .header-left { display: flex; align-items: center; gap: 8px; }
+    .header-left img { width: 24px; height: 24px; border-radius: 6px; }
+    .app-title { font-size: 13px; font-weight: 600; }
+    .app-sub { font-size: 10px; color: var(--text2); }
+    .icon-btn { background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; border-radius: 6px; font-size: 14px; margin-left: 4px; }
+    .icon-btn:hover { color: var(--text); }
+
+    .field { margin-bottom: 8px; }
+    .field-label { font-size: 10px; color: var(--text2); margin-bottom: 4px; text-transform: uppercase; }
+    .field input[type="password"], .field input[type="text"] {
+      width: 100%; padding: 6px 10px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-size: 12px; outline: none;
+    }
+    .checkbox-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+    .checkbox-row label { font-size: 10px; }
+
+    .toggle-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .toggle-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; flex: 1; display: flex; align-items: center; justify-content: space-between; }
+    .toggle-info { display: flex; align-items: center; gap: 8px; }
+    .toggle-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: #e8f0fe; color: var(--accent); }
+    .toggle-name { font-size: 12px; font-weight: 500; }
+    .toggle-state { font-size: 10px; margin-top: 1px; }
+    .toggle-state.on  { color: var(--green); }
+    .toggle-state.off { color: var(--red); }
+
+    .switch { position: relative; width: 38px; height: 20px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 20px; transition: background 0.2s; }
+    .slider::before { content: ""; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px; background: white; border-radius: 50%; transition: transform 0.2s; }
+    input:checked + .slider { background: var(--accent); }
+    input:checked + .slider::before { transform: translateX(18px); }
+    input:disabled + .slider { opacity: 0.5; }
+
+    #status { font-size: 10px; text-align: center; min-height: 14px; margin-bottom: 6px; }
+    #status.error { color: var(--red); }
+    #status.success { color: var(--green); }
+    .spinner { display: inline-block; width: 8px; height: 8px; border: 1.5px solid #ccc; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 4px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .consumo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; margin-bottom: 12px; }
+    .progress-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 10px; color: var(--text2); }
+    .progress-track { background: var(--bg); border-radius: 4px; height: 6px; overflow: hidden; margin-bottom: 6px; }
+    .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; background: var(--accent); }
+    .progress-footer { display: flex; justify-content: space-between; font-size: 11px; }
+    .remaining { color: var(--green); font-weight: 600; }
+    .used-of { color: var(--text2); }
+
+    .signal-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; margin-bottom: 12px; }
+    .signal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .signal-header span:first-child { font-size: 11px; color: var(--text2); }
+    .refresh-signal { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 2px 6px; font-size: 11px; color: var(--text2); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+    .refresh-signal:hover { background: var(--surface2); color: var(--accent); border-color: var(--accent); }
+    .signal-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 5px; font-size: 11px; color: var(--text2); cursor: pointer; text-align: center; width: 100%; }
+    .signal-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    .signal-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .signal-label { font-size: 10px; color: var(--text2); }
+    .signal-value-dot { display: flex; align-items: center; gap: 10px; }
+    .signal-value { font-size: 13px; font-weight: 500; }
+    .signal-dot { font-size: 16px; }
+    .signal-desc { font-size: 11px; color: var(--text2); margin-top: 2px; margin-bottom: 12px; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .stat-box { background: var(--surface2); border-radius: 8px; padding: 6px; text-align: center; }
+    .stat-val { font-size: 12px; font-weight: 600; }
+    .stat-lbl { font-size: 9px; color: var(--text2); }
+
+    .device-list { display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; }
+    .device { display: flex; align-items: center; gap: 8px; background: var(--surface2); border-radius: 8px; padding: 8px; }
+    .device-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .device-body { flex: 1; min-width: 0; }
+    .device-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .device-meta { font-size: 10px; color: var(--text2); }
+    .device-rates { text-align: right; font-size: 10px; white-space: nowrap; }
+    .no-devices { font-size: 12px; color: var(--text2); text-align: center; padding: 16px; }
+
+    .tabs { display: flex; border-top: 1px solid var(--border); background: var(--surface); margin-top: auto; }
+    .tab { flex: 1; text-align: center; padding: 10px 0; background: none; border: none; color: var(--text2); font-size: 12px; cursor: pointer; transition: color 0.2s; }
+    .tab.active { color: var(--accent); border-top: 2px solid var(--accent); margin-top: -1px; }
+    .tab:hover { color: var(--text); }
+
+    .button-row { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+    .button-row button, .save-btn { padding: 4px 12px; font-size: 11px; border-radius: 6px; cursor: pointer; border: none; }
+    #login-btn { background: var(--accent); color: white; }
+    #logout-btn { background: #c5221f20; border: 1px solid var(--red); color: var(--red); border-radius: 6px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+    .save-btn { background: var(--accent); color: white; }
+
+    .settings-title { font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .lang-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+    .lang-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px; text-align: center; cursor: pointer; font-size: 11px; }
+    .lang-btn.active { border-color: var(--accent); color: var(--accent); background: #e8f0fe; }
+  </style>
+</head>
+<body>
+
+<!-- PAGINA HOME -->
+<div id="page-home" class="page active">
+  <div class="header">
+    <div class="header-left">
+      <img src="icon48.png" alt="logo">
+      <div>
+        <div class="app-title" data-i18n="appName">Router Manager</div>
+        <div class="app-sub" id="gateway-display">192.168.1.1</div>
+      </div>
+    </div>
+    <div>
+      <button id="logout-btn" data-i18n="logout" style="display:none">🔓 Esci</button>
+      <!-- <button class="icon-btn" id="donate-btn" title="Buy me a coffee">☕</button> -->
+      <button class="icon-btn" id="btn-settings" title="Settings">⚙️</button>
+    </div>
+  </div>
+
+  <div id="password-field" class="field">
+    <div class="field-label" data-i18n="password">Password</div>
+    <input type="password" id="pwd" placeholder="Password">
+    <div class="checkbox-row">
+      <input type="checkbox" id="save-pwd">
+      <label data-i18n="rememberPassword">Remember password</label>
+    </div>
+    <div class="button-row">
+      <button id="login-btn">🔐 Login</button>
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <div class="toggle-card">
+      <div class="toggle-info">
+        <div class="toggle-icon wifi-icon">📶</div>
+        <div>
+          <div class="toggle-name" data-i18n="wifi">WiFi</div>
+          <div class="toggle-state unknown" id="wifi-state">—</div>
+        </div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="wifi-toggle" disabled>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="toggle-card">
+      <div class="toggle-info">
+        <div class="toggle-icon data-icon">📡</div>
+        <div>
+          <div class="toggle-name" data-i18n="mobileData">Mobile Data</div>
+          <div class="toggle-state unknown" id="data-state">—</div>
+        </div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="data-toggle" disabled>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div id="status"></div>
+
+  <div class="consumo-card" id="stats-section" style="display:none">
+    <div class="progress-header">
+      <span data-i18n="remaining">Remaining</span>
+      <span id="stat-limit-label">—</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="stat-bar" style="width:0%"></div></div>
+    <div class="progress-footer">
+      <span class="remaining" id="stat-remaining">—</span>
+      <span class="used-of" id="stat-used-total">—</span>
+    </div>
+  </div>
+
+  <!-- SEZIONE SEGNALE 4G - senza barre, con pallini -->
+  <div id="signal-home" class="signal-card" style="display:none">
+    <div class="signal-header">
+      <span data-i18n="signal4g">📡 Segnale 4G</span>
+      <button id="refresh-signal-btn" class="refresh-signal" data-i18n="refreshSignal">🔄 Aggiorna</button>
+    </div>
+
+    <!-- RSRP -->
+    <div class="signal-row">
+      <span class="signal-label" data-i18n="signalPower">Potenza segnale (RSRP)</span>
+      <div class="signal-value-dot">
+        <span id="signal-value-home" class="signal-value">-- dBm</span>
+        <span id="signal-dot-rsrp" class="signal-dot">⚪</span>
+      </div>
+    </div>
+    <div id="signal-desc-home" class="signal-desc">---</div>
+
+    <!-- RSRQ -->
+    <div id="rsrq-container">
+      <div class="signal-row">
+        <span class="signal-label" data-i18n="signalQuality">Qualità segnale (RSRQ)</span>
+        <div class="signal-value-dot">
+          <span id="signal-rsrq-value" class="signal-value">-- dB</span>
+          <span id="signal-dot-rsrq" class="signal-dot">⚪</span>
+        </div>
+      </div>
+      <div id="signal-rsrq-desc" class="signal-desc">---</div>
+    </div>
+
+    <button id="toggle-signal-details" class="signal-btn" data-i18n="showDetails">📋 Mostra dettagli</button>
+    <div id="signal-details-panel" style="display: none; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border);">
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-val" id="signal-rsrp-detail">--</div><div class="stat-lbl">RSRP</div></div>
+        <div class="stat-box"><div class="stat-val" id="signal-rsrq-detail">--</div><div class="stat-lbl">RSRQ</div></div>
+        <div class="stat-box"><div class="stat-val" id="signal-rssi-detail">--</div><div class="stat-lbl">RSSI</div></div>
+        <div class="stat-box"><div class="stat-val" id="signal-sinr-detail">--</div><div class="stat-lbl">SINR</div></div>
+        <div class="stat-box"><div class="stat-val" id="signal-pci-detail">--</div><div class="stat-lbl">PCI</div></div>
+        <div class="stat-box"><div class="stat-val" id="signal-band-detail">--</div><div class="stat-lbl">Band</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGINA DISPOSITIVI -->
+<div id="page-devices" class="page">
+  <div class="header" style="margin-bottom: 8px;">
+    <div class="header-left">
+      <img src="icon48.png" alt="logo">
+      <div>
+        <div class="app-title" data-i18n="devicesTitle">Connected devices</div>
+        <div class="app-sub" id="device-count-sub">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="device-list" id="device-list"></div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div id="page-settings" class="page">
+  <div class="settings-title">
+    <button class="icon-btn" id="btn-back">←</button>
+    <span data-i18n="settings">Settings</span>
+  </div>
+  <div class="settings-section">
+    <div class="settings-section-label" data-i18n="gateway">Gateway</div>
+    <input type="text" id="gateway-input" value="192.168.1.1" style="width:100%; padding:6px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text);">
+  </div>
+  <div class="settings-section">
+    <div class="settings-section-label" data-i18n="language">Language</div>
+    <div class="lang-grid">
+      <div class="lang-btn" data-lang="en">🇬🇧 English</div>
+      <div class="lang-btn" data-lang="it">🇮🇹 Italiano</div>
+      <div class="lang-btn" data-lang="es">🇪🇸 Español</div>
+    </div>
+  </div>
+  <div class="button-row" style="justify-content: flex-end;">
+    <button class="save-btn" id="btn-save-settings" data-i18n="save">Save</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="home" data-i18n="homeTab">🏠 Home</button>
+  <button class="tab" id="devices-tab-btn" data-tab="devices" data-i18n="devicesTab">📱 Devices</button>
+</div>
+
+<script src="scram.js"></script>
+<script src="i18n.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
