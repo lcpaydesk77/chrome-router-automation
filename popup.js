@@ -522,10 +522,10 @@ document.getElementById('btn-save-settings').addEventListener('click', async () 
   document.querySelector('.tab[data-tab="home"]').classList.add('active');
 });
 
-// document.getElementById('donate-btn').addEventListener('click', e => {
-//  e.preventDefault();
-//  window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lc.paydesk77@gmail.com&currency_code=EUR', '_blank');
-// });
+document.getElementById('donate-btn').addEventListener('click', e => {
+  e.preventDefault();
+  window.opn('https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lc.paydesk77@gmail.com&currency_code=EUR', '_blank');
+});
 
 chrome.storage.local.get(['pwd','savePwd','gateway','lang'], ({pwd, savePwd, gateway, lang}) => {
   initI18n(lang);
